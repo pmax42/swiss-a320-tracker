@@ -23,6 +23,8 @@ services:
         condition: service_healthy
     environment:
       - DB_HOST=db
+      - OPENSKY_USER=${OPENSKY_USER}
+      - OPENSKY_PASS=${OPENSKY_PASS}
 
   api:
     build: .

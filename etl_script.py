@@ -19,7 +19,19 @@ def fetch_flight_data():
     }
     
     try:
-        response = requests.get(url, params=params, timeout=10)
+        opensky_user = os.getenv("OPENSKY_USER")
+        opensky_pass = os.getenv("OPENSKY_PASS")
+
+        headers = {'User-Agent': 'SwissA320Tracker/1.0 (Portfolio Project)'}
+        
+        auth = (opensky_user, opensky_pass) if opensky_user and opensky_pass else None
+        
+        response = requests.get(
+            url, 
+            headers=headers,
+            auth=auth, 
+            timeout=15
+        )
         response.raise_for_status()
         data = response.json()
         
