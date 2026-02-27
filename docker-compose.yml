@@ -21,10 +21,12 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    env_file:
+      - .env
     environment:
       - DB_HOST=db
-      - OPENSKY_USER=${OPENSKY_USER}
-      - OPENSKY_PASS=${OPENSKY_PASS}
+      - OPENSKY_CLIENT_ID=${OPENSKY_CLIENT_ID}
+      - OPENSKY_CLIENT_SECRET=${OPENSKY_CLIENT_SECRET}
 
   api:
     build: .
@@ -35,8 +37,12 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    env_file:
+      - .env
     environment:
       - DB_HOST=db
+      - OPENSKY_CLIENT_ID=${OPENSKY_CLIENT_ID}
+      - OPENSKY_CLIENT_SECRET=${OPENSKY_CLIENT_SECRET}
 
   dashboard:
     build: .

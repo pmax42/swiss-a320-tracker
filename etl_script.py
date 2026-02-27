@@ -17,21 +17,33 @@ def fetch_flight_data():
         "lamin": BOUNDING_BOX[0], "lomin": BOUNDING_BOX[1],
         "lamax": BOUNDING_BOX[2], "lomax": BOUNDING_BOX[3]
     }
+    client_id = os.getenv("OPENSKY_CLIENT_ID")
+    client_secret = os.getenv("OPENSKY_CLIENT_SECRET")
     
     try:
-        opensky_user = os.getenv("OPENSKY_USER")
-        opensky_pass = os.getenv("OPENSKY_PASS")
-
-        headers = {'User-Agent': 'SwissA320Tracker/1.0 (Portfolio Project)'}
+        # OAuth2 Token Request
+        token_url = "https://auth.opensky-network.org/auth/realms/opensky-network/protocol/openid-connect/token"
+        token_data = {
+            "grant_type": "client_credentials",
+            "client_id": client_id,
+            "client_secret": client_secret
+        }
         
-        auth = (opensky_user, opensky_pass) if opensky_user and opensky_pass else None
+        token_response = requests.post(token_url, data=token_data)
         
-        response = requests.get(
-            url, 
-            headers=headers,
-            auth=auth, 
-            timeout=15
-        )
+        if token_response.status_code != 200:
+            print(f"OAuth2 error: {token_response.text}")
+            return pd.DataFrame()
+            
+        access_token = token_response.json().get("access_token")
+        
+        # OpenSky API request with Bearer token
+        headers = {
+            'User-Agent': 'SwissA320Tracker/1.0 (Portfolio Project)',
+            'Authorization': f'Bearer {access_token}'
+        }
+        
+        response = requests.get(url, headers=headers, params=params, timeout=15)
         response.raise_for_status()
         data = response.json()
         
