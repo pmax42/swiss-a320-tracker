@@ -28,8 +28,8 @@ if os.getenv("STREAMLIT_UI_HIDE_TOP_BAR") == "true":
         </style>
     """, unsafe_allow_html=True)
 
-# Auto-refresh the dashboard every 60 seconds
-st_autorefresh(interval=60000, key="data_refresh")
+# Auto-refresh the dashboard every 90 seconds
+st_autorefresh(interval=90000, key="data_refresh")
 
 # Initialize session state variables
 if 'client_tz_str' not in st.session_state:
@@ -49,7 +49,7 @@ st.markdown("""
     ### Real-time flight monitoring over Switzerland
     - **Tech Stack:** Python, PostgreSQL, FastAPI, Streamlit, Docker
     - **Source:** OpenSky Network API
-    - **Dashboard:** Auto-refreshes every 60 seconds with live flight data
+    - **Dashboard:** Auto-refreshes every 90 seconds with live flight data
     - **CI/CD Pipeline (GitHub Actions):**
         - Automatic linting and testing on every commit
         - Multi-stage Docker build for ETL, API, and Dashboard services
@@ -123,4 +123,4 @@ if data_json and data_json.get('count', 0) > 0:
         st.dataframe(df[['callsign', 'origin_country', 'velocity', 'baro_altitude', 'on_ground']])
 
 else:
-    st.info("Awaiting flight data. The ETL process fetches new data every minute.")
+    st.info("Awaiting flight data. The ETL process fetches new data every 90 seconds.")
