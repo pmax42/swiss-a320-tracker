@@ -38,7 +38,7 @@ graph TD
 
 ### ✨ Key Features
 
-* **Real-Time ETL Pipeline:** Fetches and processes flight data every 60 seconds. Optimizes storage by maintaining only a rolling 2-hour window of historical data.
+* **Real-Time ETL Pipeline:** Fetches and processes flight data every 90 seconds. Optimizes storage by maintaining only a rolling 2-hour window of historical data.
 * **Interactive 3D Map:** Built with Streamlit and PyDeck to render a dynamic, auto-refreshing map of live air traffic.
 * **Decoupled Architecture:** Separated into distinct microservices for data ingestion, database, REST API, and frontend.
 * **Automated Deployment:** CI/CD pipeline using GitHub Actions for continuous deployment to AWS Lightsail on every push to the `main` branch.

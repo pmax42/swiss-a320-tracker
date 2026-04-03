@@ -123,8 +123,8 @@ def run_etl_cycle() -> None:
         logging.error(f"Critical error during ETL cycle: {e}")
 
 if __name__ == "__main__":
-    logging.info("ETL process started. Fetching data every 60 seconds...")
-    INTERVAL_SECONDS = 60
+    logging.info("ETL process started. Fetching data every 90 seconds...")
+    INTERVAL_SECONDS = 90
 
     while True:
         start_time = time.time()
